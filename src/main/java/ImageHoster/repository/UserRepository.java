@@ -29,6 +29,9 @@ public class UserRepository {
         } catch (Exception e) {
             transaction.rollback();
         }
+        finally {
+            em.close();
+        }
     }
 
 
@@ -38,15 +41,23 @@ public class UserRepository {
     //Returns the fetched user
     //Returns null in case of NoResultException
     public User checkUser(String username, String password) {
+        EntityManager em = emf.createEntityManager();
         try {
-            EntityManager em = emf.createEntityManager();
+
             TypedQuery<User> typedQuery = em.createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
             typedQuery.setParameter("username", username);
             typedQuery.setParameter("password", password);
 
             return typedQuery.getSingleResult();
-        } catch (NoResultException nre) {
+        }
+
+        catch (NoResultException nre) {
+
             return null;
         }
+        finally {
+            em.close();
+        }
+
     }
 }

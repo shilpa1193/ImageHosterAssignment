@@ -30,7 +30,11 @@ public class ImageRepository {
             em.persist(newImage);
             transaction.commit();
         } catch (Exception e) {
+
             transaction.rollback();
+        }
+        finally {
+            em.close();
         }
         return newImage;
     }
@@ -42,6 +46,7 @@ public class ImageRepository {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Image> query = em.createQuery("SELECT i from Image i", Image.class);
         List<Image> resultList = query.getResultList();
+        em.close ();
 
         return resultList;
     }
@@ -86,6 +91,9 @@ public class ImageRepository {
         } catch (Exception e) {
             transaction.rollback();
         }
+        finally {
+            em.close();
+        }
     }
 
     //The method receives the Image id of the image to be deleted in the database
@@ -108,6 +116,10 @@ public class ImageRepository {
         } catch (Exception e) {
             transaction.rollback();
         }
+        finally {
+            em.close();
+        }
     }
+
 
 }

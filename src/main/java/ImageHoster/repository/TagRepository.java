@@ -21,8 +21,12 @@ public class TagRepository {
         } catch (Exception e) {
             transaction.rollback();
         }
+        finally {
+            em.close();
+        }
         return tag;
     }
+
 
     public Tag findTag(String tagName) {
         EntityManager em = emf.createEntityManager();
@@ -31,6 +35,9 @@ public class TagRepository {
             return typedQuery.getSingleResult();
         } catch (NoResultException nre) {
             return null;
+        }
+        finally {
+            em.close();
         }
     }
 }
