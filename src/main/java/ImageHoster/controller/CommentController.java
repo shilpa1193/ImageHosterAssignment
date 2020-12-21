@@ -26,7 +26,7 @@ public class CommentController {
     CommentService commentService;
 
 
-    @RequestMapping(value = "/image/{imageid}/{imagetitle}/comments", method = RequestMethod.POST)
+    @RequestMapping(value = "/image/{id}/{imagetitle}/comments", method = RequestMethod.POST)
     public String createComment(@PathVariable("id") Integer id, @PathVariable("title") String title,
                                 @RequestParam("comment") String text, HttpSession session) {
         Image image = imageService.getImage(id);
